@@ -28,10 +28,10 @@ test: &test
 
 production:
   adapter: postgresql
-  database: de4fa6br6c1i56
-  username: cqlbwbnrvaaqvd
-  password: _2PKLgGC9UpEl4oY8jTkLH9PPl
-  host: localhost
+  database: d2e4gj8cskki1f
+  username: nvmdvxkmunhyzz
+  password:  Q1kGho2nd73rSpahRZcDhz38tn
+  host: ec2-54-83-52-144.compute-1.amazonaws.com
   encoding: UTF8
   pool: 5
   timeout: 5000
