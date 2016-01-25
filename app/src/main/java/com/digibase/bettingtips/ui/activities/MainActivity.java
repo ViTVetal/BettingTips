@@ -1,10 +1,14 @@
 package com.digibase.bettingtips.ui.activities;
 
+import android.support.v4.widget.SwipeRefreshLayout;
 import android.support.v7.app.ActionBarActivity;
 import android.os.Bundle;
+import android.util.Log;
 import android.view.Menu;
 import android.view.MenuItem;
 
+import butterknife.ButterKnife;
+import butterknife.InjectView;
 import digibase.com.bettingtips.R;
 import com.digibase.bettingtips.adapters.ViewPagerAdapter;
 import com.digibase.bettingtips.ui.views.SlidingTabLayout;

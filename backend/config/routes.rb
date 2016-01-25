@@ -1,4 +1,9 @@
 Rails.application.routes.draw do
+  devise_for :admin_users, ActiveAdmin::Devise.config
+  ActiveAdmin.routes(self)
+
+  get '/api/events/by_category/:id', to: 'api/events#by_category'
+  get '/api/events/:id', to: 'api/events#single'
   # The priority is based upon order of creation: first created -> highest priority.
   # See how all your routes lay out with "rake routes".
 
