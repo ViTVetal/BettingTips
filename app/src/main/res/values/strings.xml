@@ -1,0 +1,11 @@
+<resources>
+    <string name="app_name">BettingTips</string>
+
+    <string name="hello_world">Hello world!</string>
+    <string name="action_settings">Settings</string>
+
+    <array name="tabs">
+        <item>Football</item>
+        <item>Other</item>
+    </array>
+</resources>
