@@ -50,9 +50,6 @@
                         android:textColor="#64b5f6"
                         android:layout_alignParentLeft="true" />
 
-
-
-
                 <LinearLayout
                     android:orientation="horizontal"
                     android:layout_width="match_parent"
@@ -90,8 +87,7 @@
                         android:id="@+id/tvScore1"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
-                        android:textStyle="bold"
-                        android:text="2"/>
+                        android:textStyle="bold"/>
 
                     <TextView
                         android:layout_width="wrap_content"
@@ -103,8 +99,7 @@
                         android:id="@+id/tvScore2"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
-                        android:textStyle="bold"
-                        android:text="1"/>
+                        android:textStyle="bold"/>
                 </LinearLayout>
 
                 <TextView
@@ -125,14 +120,12 @@
                     android:layout_height="wrap_content"
                     android:textSize="18sp"
                     android:textStyle="bold"
-                    android:text="1.6"
                     android:layout_alignParentTop="true" />
 
                 <ImageView
                     android:id="@+id/ivSuccess"
                     android:layout_width="40dp"
                     android:layout_height="40dp"
-                    android:src="@drawable/ic_check"
                     android:layout_alignParentBottom="true"/>
 
             </RelativeLayout>
