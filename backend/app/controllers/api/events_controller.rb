@@ -1,6 +1,6 @@
 class Api::EventsController < ApplicationController
   def by_category
-    render :json => Category.find(params[:id]).events
+    render :json => Category.find(params[:id]).events.reverse_order
   end
 
   def single

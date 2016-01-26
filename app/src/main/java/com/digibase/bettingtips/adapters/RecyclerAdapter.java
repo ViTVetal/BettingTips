@@ -1,10 +1,15 @@
 package com.digibase.bettingtips.adapters;
 
 
+import android.content.Context;
+import android.support.v4.content.ContextCompat;
+import android.support.v7.widget.CardView;
 import android.support.v7.widget.RecyclerView;
+import android.text.TextUtils;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.ImageView;
 import android.widget.TextView;
 
 import com.digibase.bettingtips.models.Event;
@@ -15,7 +20,7 @@ import digibase.com.bettingtips.R;
 
 public class RecyclerAdapter extends RecyclerView.Adapter<RecyclerAdapter.ViewHolder> {
     private List<Event> eventList;
-
+    private Context context;
     // Provide a reference to the views for each data item
     // Complex data items may need more than one view per item, and
     // you provide access to all the views for a data item in a view holder
@@ -25,6 +30,11 @@ public class RecyclerAdapter extends RecyclerView.Adapter<RecyclerAdapter.ViewHo
         protected TextView tvTeam2;
         protected TextView tvTip;
         protected TextView tvDate;
+        protected TextView tvScore1;
+        protected TextView tvScore2;
+        protected TextView tvOdds;
+        protected ImageView ivSuccess;
+        protected CardView cardView;
 
         public ViewHolder(View v) {
             super(v);
@@ -32,12 +42,18 @@ public class RecyclerAdapter extends RecyclerView.Adapter<RecyclerAdapter.ViewHo
             tvTeam2 = (TextView)  v.findViewById(R.id.tvTeam2);
             tvTip = (TextView)  v.findViewById(R.id.tvTip);
             tvDate = (TextView) v.findViewById(R.id.tvDate);
+            tvScore1 = (TextView)  v.findViewById(R.id.tvScore1);
+            tvScore2 = (TextView) v.findViewById(R.id.tvScore2);
+            tvOdds = (TextView) v.findViewById(R.id.tvOdds);
+            ivSuccess = (ImageView) v.findViewById(R.id.ivSuccess);
+            cardView = (CardView) v.findViewById(R.id.card_view);
         }
     }
 
     // Provide a suitable constructor (depends on the kind of dataset)
-    public RecyclerAdapter(List<Event> eventList) {
+    public RecyclerAdapter(List<Event> eventList, Context context) {
         this.eventList = eventList;
+        this.context = context;
     }
 
     // Create new views (invoked by the layout manager)
@@ -58,11 +74,36 @@ public class RecyclerAdapter extends RecyclerView.Adapter<RecyclerAdapter.ViewHo
         // - get element from your dataset at this position
         // - replace the contents of the view with that element
 
+        boolean isScore1 = false, isScore2 = false;
+
+        if(position % 2 == 0)
+            holder.cardView.setCardBackgroundColor(ContextCompat.getColor(context, R.color.white));
+        else
+            holder.cardView.setCardBackgroundColor(ContextCompat.getColor(context, R.color.gray));
+
         Event event = eventList.get(position);
         holder.tvTeam1.setText(event.team1);
         holder.tvTeam2.setText(event.team2);
         holder.tvTip.setText(event.tip);
         holder.tvDate.setText(event.date);
+        holder.tvOdds.setText(event.odds);
+
+        if(event.score1 != null && !TextUtils.isEmpty(event.score1)) {
+            holder.tvScore1.setText(event.score1);
+            isScore1 = true;
+        }
+
+        if(event.score2 != null && !TextUtils.isEmpty(event.score2)) {
+            holder.tvScore2.setText(event.score2);
+            isScore2 = true;
+        }
+
+        if(isScore1 && isScore2) {
+            if(event.success)
+                holder.ivSuccess.setImageDrawable(ContextCompat.getDrawable(context, R.drawable.ic_check));
+            else
+                holder.ivSuccess.setImageDrawable(ContextCompat.getDrawable(context, R.drawable.ic_cross));
+        }
     }
 
     // Return the size of your dataset (invoked by the layout manager)

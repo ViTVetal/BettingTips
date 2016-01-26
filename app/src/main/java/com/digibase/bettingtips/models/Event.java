@@ -5,4 +5,8 @@ public class Event {
     public String team2;
     public String tip;
     public String date;
+    public String odds;
+    public String score1;
+    public String score2;
+    public boolean success;
 }

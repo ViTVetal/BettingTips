@@ -2,6 +2,7 @@ package com.digibase.bettingtips.ui.activities;
 
 import android.app.Activity;
 import android.content.Intent;
+import android.content.pm.ActivityInfo;
 import android.os.Bundle;
 import android.os.Handler;
 import android.widget.Toast;
@@ -10,7 +11,7 @@ import com.digibase.bettingtips.network.ConnectionDetector;
 
 import digibase.com.bettingtips.R;
 
-public class SplashActivity extends Activity {
+public class SplashActivity extends BaseActivity {
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);

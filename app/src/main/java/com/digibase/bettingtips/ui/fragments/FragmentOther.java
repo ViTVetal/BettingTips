@@ -4,8 +4,10 @@ import android.os.Bundle;
 import android.support.annotation.Nullable;
 import android.support.v4.app.Fragment;
 import android.support.v4.widget.SwipeRefreshLayout;
+import android.support.v7.widget.GridLayoutManager;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
+import android.text.TextUtils;
 import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -53,7 +55,11 @@ public class FragmentOther extends Fragment {
         recyclerView.setHasFixedSize(true);
 
         // use a linear layout manager
-        mLayoutManager = new LinearLayoutManager(getActivity());
+        if(getResources().getBoolean(R.bool.isTablet)) {
+            mLayoutManager = new GridLayoutManager(getActivity(), 3);
+        } else
+            mLayoutManager = new LinearLayoutManager(getActivity());
+
         recyclerView.setLayoutManager(mLayoutManager);
 
 
@@ -98,18 +104,29 @@ public class FragmentOther extends Fragment {
                                     String team2 = eventJson.getString("team2");
                                     String tip = eventJson.getString("tip");
                                     String date = eventJson.getString("date");
+                                    String odds = eventJson.getString("odds");
+                                    String score1 = eventJson.getString("score1");
+                                    String score2 = eventJson.getString("score2");
+                                    boolean success = eventJson.getBoolean("success");
 
                                     Event event = new Event();
                                     event.team1 = team1;
                                     event.team2 = team2;
                                     event.tip = tip;
                                     event.date = date;
+                                    event.odds = odds;
+                                    if(score1 != null && !TextUtils.isEmpty(score1))
+                                        event.score1 = score1;
+                                    if(score2 != null && !TextUtils.isEmpty(score2))
+                                        event.score2 = score2;
+                                    event.success = success;
+
                                     eventList.add(event);
                                 }
 
 
                                 // specify an adapter (see also next example)
-                                mAdapter = new RecyclerAdapter(eventList);
+                                mAdapter = new RecyclerAdapter(eventList, getActivity());
                                 recyclerView.setAdapter(mAdapter);
 
 
