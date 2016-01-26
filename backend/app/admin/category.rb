@@ -14,5 +14,6 @@ ActiveAdmin.register Category do
 # end
 
 permit_params :name
+menu false
 
 end

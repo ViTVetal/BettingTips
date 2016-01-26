@@ -91,11 +91,17 @@ public class RecyclerAdapter extends RecyclerView.Adapter<RecyclerAdapter.ViewHo
         if(event.score1 != null && !TextUtils.isEmpty(event.score1)) {
             holder.tvScore1.setText(event.score1);
             isScore1 = true;
+        } else {
+            holder.tvScore1.setText("");
+            holder.tvScore2.setText("");
         }
 
         if(event.score2 != null && !TextUtils.isEmpty(event.score2)) {
             holder.tvScore2.setText(event.score2);
             isScore2 = true;
+        } else {
+            holder.tvScore1.setText("");
+            holder.tvScore2.setText("");
         }
 
         if(isScore1 && isScore2) {
@@ -103,6 +109,8 @@ public class RecyclerAdapter extends RecyclerView.Adapter<RecyclerAdapter.ViewHo
                 holder.ivSuccess.setImageDrawable(ContextCompat.getDrawable(context, R.drawable.ic_check));
             else
                 holder.ivSuccess.setImageDrawable(ContextCompat.getDrawable(context, R.drawable.ic_cross));
+        } else {
+            holder.ivSuccess.setImageDrawable(null);
         }
     }
 

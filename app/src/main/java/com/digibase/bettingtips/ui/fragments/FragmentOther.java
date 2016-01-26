@@ -115,9 +115,9 @@ public class FragmentOther extends Fragment {
                                     event.tip = tip;
                                     event.date = date;
                                     event.odds = odds;
-                                    if(score1 != null && !TextUtils.isEmpty(score1))
+                                    if(score1 != null && !TextUtils.isEmpty(score1) && !score1.equals("null"))
                                         event.score1 = score1;
-                                    if(score2 != null && !TextUtils.isEmpty(score2))
+                                    if(score2 != null && !TextUtils.isEmpty(score2) && !score2.equals("null"))
                                         event.score2 = score2;
                                     event.success = success;
 
