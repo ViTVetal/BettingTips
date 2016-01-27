@@ -85,7 +85,7 @@ public class FragmentOther extends Fragment {
 
     private void getInfo() {
         if(ConnectionDetector.isConnection(getActivity())) {
-            JsonArrayRequest stringRequest = new JsonArrayRequest(BuildConfig.API_URL + "/by_category/" + 2,
+            JsonArrayRequest stringRequest = new JsonArrayRequest("http://bettingtips.heroku.com/api/events/by_category/" + 2,
                     new Response.Listener<JSONArray>() {
                         @Override
                         public void onResponse(JSONArray response) {

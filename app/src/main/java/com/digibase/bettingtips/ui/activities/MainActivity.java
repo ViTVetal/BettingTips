@@ -1,5 +1,7 @@
 package com.digibase.bettingtips.ui.activities;
 
+import android.app.Dialog;
+import android.content.Intent;
 import android.content.pm.ActivityInfo;
 import android.support.v4.widget.SwipeRefreshLayout;
 import android.support.v7.app.ActionBarActivity;
@@ -11,15 +13,20 @@ import android.view.MenuItem;
 import butterknife.ButterKnife;
 import butterknife.InjectView;
 import digibase.com.bettingtips.R;
+
+import com.digibase.bettingtips.RegistrationIntentService;
 import com.digibase.bettingtips.adapters.ViewPagerAdapter;
 import com.digibase.bettingtips.ui.views.SlidingTabLayout;
+import com.google.android.gms.common.ConnectionResult;
+import com.google.android.gms.common.GoogleApiAvailability;
+import com.google.android.gms.common.GooglePlayServicesUtil;
 
 
 import android.support.v4.view.ViewPager;
 import android.support.v7.widget.Toolbar;
 
 
-public class MainActivity extends BaseActivity {
+public class MainActivity extends BaseActivity  {
 
     // Declaring Your View and Variables
 
@@ -65,12 +72,22 @@ public class MainActivity extends BaseActivity {
 
         // Setting the ViewPager For the SlidingTabsLayout
         tabs.setViewPager(pager);
-
-
-
     }
 
+    @Override
+    protected void onResume() {
+        super.onResume();
+        int resultCode = GoogleApiAvailability.getInstance().isGooglePlayServicesAvailable(this);
 
+        if(resultCode != ConnectionResult.SUCCESS) {
+            Dialog playServicesDialog = GooglePlayServicesUtil.getErrorDialog(resultCode, this, 0);
+            playServicesDialog.show();
+        } else {
+            // Start IntentService to register this application with GCM.
+            Intent intent = new Intent(this, RegistrationIntentService.class);
+            startService(intent);
+        }
+    }
     @Override
     public boolean onCreateOptionsMenu(Menu menu) {
         // Inflate the menu; this adds items to the action bar if it is present.
