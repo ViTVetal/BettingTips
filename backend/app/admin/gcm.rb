@@ -12,6 +12,7 @@ ActiveAdmin.register Gcm do
 #   permitted << :other if resource.something?
 #   permitted
 # end
+
 menu false
 
 end
