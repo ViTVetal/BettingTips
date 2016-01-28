@@ -116,6 +116,8 @@ public class FragmentFootball extends Fragment {
                                     String score2 = eventJson.getString("score2");
                                     boolean success = eventJson.getBoolean("success");
                                     String imageURL = eventJson.getString("image_url");
+                                    if(imageURL == null || imageURL.equals("null") || TextUtils.isEmpty(imageURL))
+                                        imageURL = "";
 
                                     Event event = new Event();
                                     event.team1 = team1;

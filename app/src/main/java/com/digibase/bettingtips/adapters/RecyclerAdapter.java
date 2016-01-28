@@ -95,11 +95,7 @@ public class RecyclerAdapter extends RecyclerView.Adapter<RecyclerAdapter.ViewHo
         holder.tvDate.setText(event.date);
         holder.tvOdds.setText(event.odds);
 
-        if(event.imageURL != null && !TextUtils.isEmpty(event.imageURL)) {
-            holder.ivCountry.setImageUrl(event.imageURL, mImageLoader);
-        } else {
-            holder.ivCountry.setImageDrawable(null);
-        }
+        holder.ivCountry.setImageUrl(event.imageURL, mImageLoader);
 
         if(event.score1 != null && !TextUtils.isEmpty(event.score1)) {
             holder.tvScore1.setText(event.score1);

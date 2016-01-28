@@ -5,6 +5,8 @@
     <string name="action_settings">Settings</string>
     <string name="check_connection">Check your connection!</string>
     <string name="notific_title">New event</string>
+    <string name="notific_sound">Notifications sound</string>
+    <string name="notific">Notifications</string>
 
     <array name="tabs">
         <item>Football</item>
