@@ -42,7 +42,7 @@ public class MainActivity extends BaseActivity  {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
 
-
+        int categoryId = getIntent().getIntExtra("categoryId", 1);
         Titles = getResources().getStringArray(R.array.tabs);
 
         // Creating The Toolbar and setting it as the Toolbar for the activity
@@ -57,6 +57,9 @@ public class MainActivity extends BaseActivity  {
         // Assigning ViewPager View and setting the adapter
         pager = (ViewPager) findViewById(R.id.pager);
         pager.setAdapter(adapter);
+
+        if(categoryId != 1)
+            pager.setCurrentItem(1);
 
         // Assiging the Sliding Tab Layout View
         tabs = (SlidingTabLayout) findViewById(R.id.tabs);

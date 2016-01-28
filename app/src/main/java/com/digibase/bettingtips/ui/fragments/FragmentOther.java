@@ -14,8 +14,10 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.Toast;
 
+import com.android.volley.DefaultRetryPolicy;
 import com.android.volley.RequestQueue;
 import com.android.volley.Response;
+import com.android.volley.RetryPolicy;
 import com.android.volley.VolleyError;
 import com.android.volley.toolbox.JsonArrayRequest;
 import com.android.volley.toolbox.Volley;
@@ -84,86 +86,91 @@ public class FragmentOther extends Fragment {
     }
 
     private void getInfo() {
-        if(ConnectionDetector.isConnection(getActivity())) {
-            JsonArrayRequest stringRequest = new JsonArrayRequest("http://bettingtips.herokuapp.com/api/events/by_category/" + 2,
-                    new Response.Listener<JSONArray>() {
-                        @Override
-                        public void onResponse(JSONArray response) {
-                            Log.d("myLogs", response.toString());
+        if(getActivity() != null) {
+            if (ConnectionDetector.isConnection(getActivity())) {
+                JsonArrayRequest stringRequest = new JsonArrayRequest("http://bettingtips.herokuapp.com/api/events/by_category/" + 2,
+                        new Response.Listener<JSONArray>() {
+                            @Override
+                            public void onResponse(JSONArray response) {
+                                Log.d("myLogs", response.toString());
 
-                            try {
-                                // Parsing json array response
-                                // loop through each json object
-                                List<Event> eventList = new ArrayList<Event>();
-                                for (int i = 0; i < response.length(); i++) {
+                                try {
+                                    // Parsing json array response
+                                    // loop through each json object
+                                    List<Event> eventList = new ArrayList<Event>();
+                                    for (int i = 0; i < response.length(); i++) {
 
-                                    JSONObject eventJson = (JSONObject) response
-                                            .get(i);
+                                        JSONObject eventJson = (JSONObject) response
+                                                .get(i);
 
-                                    String team1 = eventJson.getString("team1");
-                                    String team2 = eventJson.getString("team2");
-                                    String tip = eventJson.getString("tip");
-                                    String date = eventJson.getString("date");
-                                    String odds = eventJson.getString("odds");
-                                    String score1 = eventJson.getString("score1");
-                                    String score2 = eventJson.getString("score2");
-                                    boolean success = eventJson.getBoolean("success");
-                                    String imageURL = eventJson.getString("image_url");
-                                    if(imageURL == null || imageURL.equals("null") || TextUtils.isEmpty(imageURL))
-                                        imageURL = "";
+                                        String team1 = eventJson.getString("team1");
+                                        String team2 = eventJson.getString("team2");
+                                        String tip = eventJson.getString("tip");
+                                        String date = eventJson.getString("date");
+                                        String odds = eventJson.getString("odds");
+                                        String score1 = eventJson.getString("score1");
+                                        String score2 = eventJson.getString("score2");
+                                        boolean success = eventJson.getBoolean("success");
+                                        String imageURL = eventJson.getString("image_url");
+                                        if (imageURL == null || imageURL.equals("null") || TextUtils.isEmpty(imageURL))
+                                            imageURL = "";
 
-                                    Event event = new Event();
-                                    event.team1 = team1;
-                                    event.team2 = team2;
-                                    event.tip = tip;
-                                    event.date = date;
-                                    event.odds = odds;
-                                    if(score1 != null && !TextUtils.isEmpty(score1) && !score1.equals("null"))
-                                        event.score1 = score1;
-                                    if(score2 != null && !TextUtils.isEmpty(score2) && !score2.equals("null"))
-                                        event.score2 = score2;
-                                    event.success = success;
-                                    event.imageURL = imageURL;
+                                        Event event = new Event();
+                                        event.team1 = team1;
+                                        event.team2 = team2;
+                                        event.tip = tip;
+                                        event.date = date;
+                                        event.odds = odds;
+                                        if (score1 != null && !TextUtils.isEmpty(score1) && !score1.equals("null"))
+                                            event.score1 = score1;
+                                        if (score2 != null && !TextUtils.isEmpty(score2) && !score2.equals("null"))
+                                            event.score2 = score2;
+                                        event.success = success;
+                                        event.imageURL = imageURL;
 
-                                    eventList.add(event);
+                                        eventList.add(event);
+                                    }
+
+
+                                    // specify an adapter (see also next example)
+                                    mAdapter = new RecyclerAdapter(eventList, getActivity());
+                                    recyclerView.setAdapter(mAdapter);
+
+
+                                } catch (JSONException e) {
+                                    e.printStackTrace();
+                                    Toast.makeText(getActivity(),
+                                            "Error: " + e.getMessage(),
+                                            Toast.LENGTH_LONG).show();
                                 }
 
+                                mySwipeRefreshLayout.setRefreshing(false);
 
-                                // specify an adapter (see also next example)
-                                mAdapter = new RecyclerAdapter(eventList, getActivity());
-                                recyclerView.setAdapter(mAdapter);
-
-
-                            } catch (JSONException e) {
-                                e.printStackTrace();
-                                Toast.makeText(getActivity(),
-                                        "Error: " + e.getMessage(),
-                                        Toast.LENGTH_LONG).show();
+                                // Toast toast = Toast.makeText(getActivity(), response, Toast.LENGTH_SHORT);
+                                // toast.show();
                             }
+                        },
+                        new Response.ErrorListener() {
+                            @Override
+                            public void onErrorResponse(VolleyError error) {
+                                mySwipeRefreshLayout.setRefreshing(false);
 
-                            mySwipeRefreshLayout.setRefreshing(false);
+                                Toast toast = Toast.makeText(getActivity(), error.getMessage(), Toast.LENGTH_SHORT);
+                                toast.show();
+                            }
+                        }) {
 
-                            // Toast toast = Toast.makeText(getActivity(), response, Toast.LENGTH_SHORT);
-                            // toast.show();
-                        }
-                    },
-                    new Response.ErrorListener() {
-                        @Override
-                        public void onErrorResponse(VolleyError error) {
-                            mySwipeRefreshLayout.setRefreshing(false);
+                };
+                int socketTimeout = 30000;
+                RetryPolicy policy = new DefaultRetryPolicy(socketTimeout, DefaultRetryPolicy.DEFAULT_MAX_RETRIES, DefaultRetryPolicy.DEFAULT_BACKOFF_MULT);
+                stringRequest.setRetryPolicy(policy);
 
-                            Toast toast = Toast.makeText(getActivity(), error.getMessage(), Toast.LENGTH_SHORT);
-                            toast.show();
-                        }
-                    }) {
-
-            };
-
-            RequestQueue requestQueue = Volley.newRequestQueue(getActivity());
-            requestQueue.add(stringRequest);
-        } else {
-            Toast toast = Toast.makeText(getActivity(), getResources().getString(R.string.check_connection), Toast.LENGTH_SHORT);
-            toast.show();
+                RequestQueue requestQueue = Volley.newRequestQueue(getActivity());
+                requestQueue.add(stringRequest);
+            } else {
+                Toast toast = Toast.makeText(getActivity(), getResources().getString(R.string.check_connection), Toast.LENGTH_SHORT);
+                toast.show();
+            }
         }
     }
 }
