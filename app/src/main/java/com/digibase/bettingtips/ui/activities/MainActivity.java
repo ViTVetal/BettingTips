@@ -78,7 +78,7 @@ public class MainActivity extends BaseActivity  {
     protected void onResume() {
         super.onResume();
         int resultCode = GoogleApiAvailability.getInstance().isGooglePlayServicesAvailable(this);
-
+        Log.d("myLogs", "RESULT CODE " + resultCode);
         if(resultCode != ConnectionResult.SUCCESS) {
             Dialog playServicesDialog = GooglePlayServicesUtil.getErrorDialog(resultCode, this, 0);
             playServicesDialog.show();

@@ -9,4 +9,5 @@ public class Event {
     public String score1;
     public String score2;
     public boolean success;
+    public String imageURL;
 }

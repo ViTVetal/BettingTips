@@ -85,7 +85,7 @@ public class FragmentOther extends Fragment {
 
     private void getInfo() {
         if(ConnectionDetector.isConnection(getActivity())) {
-            JsonArrayRequest stringRequest = new JsonArrayRequest("http://bettingtips.heroku.com/api/events/by_category/" + 2,
+            JsonArrayRequest stringRequest = new JsonArrayRequest("http://bettingtips.herokuapp.com/api/events/by_category/" + 2,
                     new Response.Listener<JSONArray>() {
                         @Override
                         public void onResponse(JSONArray response) {
@@ -108,6 +108,7 @@ public class FragmentOther extends Fragment {
                                     String score1 = eventJson.getString("score1");
                                     String score2 = eventJson.getString("score2");
                                     boolean success = eventJson.getBoolean("success");
+                                    String imageURL = eventJson.getString("image_url");
 
                                     Event event = new Event();
                                     event.team1 = team1;
@@ -120,6 +121,7 @@ public class FragmentOther extends Fragment {
                                     if(score2 != null && !TextUtils.isEmpty(score2) && !score2.equals("null"))
                                         event.score2 = score2;
                                     event.success = success;
+                                    event.imageURL = imageURL;
 
                                     eventList.add(event);
                                 }

@@ -12,7 +12,10 @@ import android.view.ViewGroup;
 import android.widget.ImageView;
 import android.widget.TextView;
 
+import com.android.volley.toolbox.ImageLoader;
+import com.android.volley.toolbox.NetworkImageView;
 import com.digibase.bettingtips.models.Event;
+import com.digibase.bettingtips.network.API;
 
 import java.util.List;
 
@@ -21,6 +24,7 @@ import digibase.com.bettingtips.R;
 public class RecyclerAdapter extends RecyclerView.Adapter<RecyclerAdapter.ViewHolder> {
     private List<Event> eventList;
     private Context context;
+    ImageLoader mImageLoader;
     // Provide a reference to the views for each data item
     // Complex data items may need more than one view per item, and
     // you provide access to all the views for a data item in a view holder
@@ -34,6 +38,7 @@ public class RecyclerAdapter extends RecyclerView.Adapter<RecyclerAdapter.ViewHo
         protected TextView tvScore2;
         protected TextView tvOdds;
         protected ImageView ivSuccess;
+        protected NetworkImageView ivCountry;
         protected CardView cardView;
 
         public ViewHolder(View v) {
@@ -46,6 +51,7 @@ public class RecyclerAdapter extends RecyclerView.Adapter<RecyclerAdapter.ViewHo
             tvScore2 = (TextView) v.findViewById(R.id.tvScore2);
             tvOdds = (TextView) v.findViewById(R.id.tvOdds);
             ivSuccess = (ImageView) v.findViewById(R.id.ivSuccess);
+            ivCountry = (NetworkImageView) v.findViewById(R.id.ivCountry);
             cardView = (CardView) v.findViewById(R.id.card_view);
         }
     }
@@ -54,6 +60,7 @@ public class RecyclerAdapter extends RecyclerView.Adapter<RecyclerAdapter.ViewHo
     public RecyclerAdapter(List<Event> eventList, Context context) {
         this.eventList = eventList;
         this.context = context;
+        mImageLoader = API.getInstance(context).getImageLoader();
     }
 
     // Create new views (invoked by the layout manager)
@@ -87,6 +94,12 @@ public class RecyclerAdapter extends RecyclerView.Adapter<RecyclerAdapter.ViewHo
         holder.tvTip.setText(event.tip);
         holder.tvDate.setText(event.date);
         holder.tvOdds.setText(event.odds);
+
+        if(event.imageURL != null && !TextUtils.isEmpty(event.imageURL)) {
+            holder.ivCountry.setImageUrl(event.imageURL, mImageLoader);
+        } else {
+            holder.ivCountry.setImageDrawable(null);
+        }
 
         if(event.score1 != null && !TextUtils.isEmpty(event.score1)) {
             holder.tvScore1.setText(event.score1);

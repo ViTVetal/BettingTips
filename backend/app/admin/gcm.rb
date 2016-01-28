@@ -12,7 +12,7 @@ ActiveAdmin.register Gcm do
 #   permitted << :other if resource.something?
 #   permitted
 # end
-
+permit_params :token
 menu false
 
 end

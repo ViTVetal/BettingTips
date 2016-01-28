@@ -82,7 +82,7 @@ public class RegistrationIntentService extends IntentService {
     private void sendRegistrationToServer(final String token) {
         final SharedPreferences sharedPreferences = PreferenceManager.getDefaultSharedPreferences(this);
         if(!sharedPreferences.getBoolean(QuickstartPreferences.SENT_TOKEN_TO_SERVER, false)) {
-            StringRequest stringRequest = new StringRequest(Request.Method.POST, "http://bettingtips.heroku.com/api/gcms",
+            StringRequest stringRequest = new StringRequest(Request.Method.POST, "http://bettingtips.herokuapp.com/api/gcms",
                     new Response.Listener<String>() {
                         @Override
                         public void onResponse(String response) {

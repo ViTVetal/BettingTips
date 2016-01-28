@@ -14,5 +14,5 @@ ActiveAdmin.register Event do
 # end
 
 permit_params :team1, :team2, :tip, :date, :category_id, 
-            :success, :odds, :score1, :score2
+            :success, :odds, :score1, :score2, :image_url
 end
