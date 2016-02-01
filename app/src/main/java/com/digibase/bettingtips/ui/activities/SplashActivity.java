@@ -1,8 +1,6 @@
 package com.digibase.bettingtips.ui.activities;
 
-import android.app.Activity;
 import android.content.Intent;
-import android.content.pm.ActivityInfo;
 import android.os.Bundle;
 import android.os.Handler;
 import android.widget.Toast;

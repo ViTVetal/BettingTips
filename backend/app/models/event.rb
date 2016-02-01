@@ -1,7 +1,8 @@
 class Event < ActiveRecord::Base
 	belongs_to :category
-  default_scope -> { order('date ASC') }
-	validates :team1, :team2, :tip, :date, :category, :odds, presence: true
+  belongs_to :league
+  default_scope -> { order('date DESC') }
+	validates :team1, :team2, :tip, :date, :category, :league, :odds, presence: true
 	validates :odds, numericality: true
 	validates :score1, :score2, numericality: { only_integer: true, allow_blank: true }
 

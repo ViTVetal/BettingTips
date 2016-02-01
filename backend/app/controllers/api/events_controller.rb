@@ -1,6 +1,8 @@
 class Api::EventsController < ApplicationController
   def by_category
-    render :json => Category.find(params[:id]).events.reverse_order
+    @categories = Category.find(params[:id]).events
+
+    render json: @categories, :include => { :league => { :only => :image_url } }
   end
 
   def single

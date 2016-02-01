@@ -13,6 +13,6 @@ ActiveAdmin.register Event do
 #   permitted
 # end
 
-permit_params :team1, :team2, :tip, :date, :category_id, 
+permit_params :team1, :team2, :tip, :date, :category_id, :league_id,
             :success, :odds, :score1, :score2, :image_url
 end

@@ -66,10 +66,10 @@ public class RegistrationIntentService extends IntentService {
             Log.d(TAG, "Failed to complete token refresh", e);
             // If an exception happens while fetching the new token or updating our registration data
             // on a third-party server, this ensures that we'll attempt the update at a later time.
-            sharedPreferences.edit().putBoolean(QuickstartPreferences.SENT_TOKEN_TO_SERVER, false).apply();
+            sharedPreferences.edit().putBoolean(AppPreferences.SENT_TOKEN_TO_SERVER, false).apply();
         }
         // Notify UI that registration has completed, so the progress indicator can be hidden.
-        Intent registrationComplete = new Intent(QuickstartPreferences.REGISTRATION_COMPLETE);
+        Intent registrationComplete = new Intent(AppPreferences.REGISTRATION_COMPLETE);
         LocalBroadcastManager.getInstance(this).sendBroadcast(registrationComplete);
     }
 
@@ -83,13 +83,13 @@ public class RegistrationIntentService extends IntentService {
      */
     private void sendRegistrationToServer(final String token) {
         final SharedPreferences sharedPreferences = PreferenceManager.getDefaultSharedPreferences(this);
-        if(!sharedPreferences.getBoolean(QuickstartPreferences.SENT_TOKEN_TO_SERVER, false)) {
-            StringRequest stringRequest = new StringRequest(Request.Method.POST, "http://bettingtips.herokuapp.com/api/gcms",
+        if(!sharedPreferences.getBoolean(AppPreferences.SENT_TOKEN_TO_SERVER, false)) {
+            StringRequest stringRequest = new StringRequest(Request.Method.POST, "http://bettingtipsspanish.herokuapp.com/api/gcms",
                     new Response.Listener<String>() {
                         @Override
                         public void onResponse(String response) {
 
-                            sharedPreferences.edit().putBoolean(QuickstartPreferences.SENT_TOKEN_TO_SERVER, true).apply();
+                            sharedPreferences.edit().putBoolean(AppPreferences.SENT_TOKEN_TO_SERVER, true).apply();
                         }
                     },
                     new Response.ErrorListener() {

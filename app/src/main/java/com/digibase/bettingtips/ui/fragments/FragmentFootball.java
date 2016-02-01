@@ -1,6 +1,5 @@
 package com.digibase.bettingtips.ui.fragments;
 
-import android.content.pm.ActivityInfo;
 import android.os.Bundle;
 import android.support.annotation.Nullable;
 import android.support.v4.app.Fragment;
@@ -9,25 +8,21 @@ import android.support.v7.widget.GridLayoutManager;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
 import android.text.TextUtils;
-import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.Toast;
 
 import com.android.volley.DefaultRetryPolicy;
-import com.android.volley.Request;
 import com.android.volley.RequestQueue;
 import com.android.volley.Response;
 import com.android.volley.RetryPolicy;
 import com.android.volley.VolleyError;
 import com.android.volley.toolbox.JsonArrayRequest;
-import com.android.volley.toolbox.StringRequest;
 import com.android.volley.toolbox.Volley;
 import com.digibase.bettingtips.adapters.RecyclerAdapter;
 import com.digibase.bettingtips.models.Event;
 import com.digibase.bettingtips.network.ConnectionDetector;
-import com.digibase.bettingtips.ui.views.FixedRecyclerView;
 
 import org.json.JSONArray;
 import org.json.JSONException;
@@ -38,7 +33,6 @@ import java.util.List;
 
 import butterknife.ButterKnife;
 import butterknife.InjectView;
-import digibase.com.bettingtips.BuildConfig;
 import digibase.com.bettingtips.R;
 
 public class FragmentFootball extends Fragment {
@@ -58,8 +52,6 @@ public class FragmentFootball extends Fragment {
 
         ButterKnife.inject(this, v);
 
-        // use this setting to improve performance if you know that changes
-        // in content do not change the layout size of the RecyclerView
         recyclerView.setHasFixedSize(true);
 
         if(getResources().getBoolean(R.bool.isTablet)) {
@@ -67,10 +59,8 @@ public class FragmentFootball extends Fragment {
         } else
             mLayoutManager = new LinearLayoutManager(getActivity());
 
-        // use a linear layout manager
 
         recyclerView.setLayoutManager(mLayoutManager);
-
 
         mySwipeRefreshLayout.setOnRefreshListener(
                 new SwipeRefreshLayout.OnRefreshListener() {
@@ -95,15 +85,12 @@ public class FragmentFootball extends Fragment {
     private void getInfo() {
         if(getActivity() != null) {
             if (ConnectionDetector.isConnection(getActivity())) {
-                JsonArrayRequest stringRequest = new JsonArrayRequest("http://bettingtips.herokuapp.com/api/events/by_category/" + 1,
+                JsonArrayRequest stringRequest = new JsonArrayRequest("http://bettingtipsspanish.herokuapp.com/api/events/by_category/" + 1,
                         new Response.Listener<JSONArray>() {
                             @Override
                             public void onResponse(JSONArray response) {
-                                Log.d("myLogs", response.toString());
 
                                 try {
-                                    // Parsing json array response
-                                    // loop through each json object
                                     List<Event> eventList = new ArrayList<Event>();
                                     for (int i = 0; i < response.length(); i++) {
 
@@ -139,11 +126,8 @@ public class FragmentFootball extends Fragment {
                                     }
 
 
-                                    // specify an adapter (see also next example)
                                     mAdapter = new RecyclerAdapter(eventList, getActivity());
                                     recyclerView.setAdapter(mAdapter);
-
-
                                 } catch (JSONException e) {
                                     e.printStackTrace();
                                     Toast.makeText(getActivity(),
@@ -152,9 +136,6 @@ public class FragmentFootball extends Fragment {
                                 }
 
                                 mySwipeRefreshLayout.setRefreshing(false);
-
-                                // Toast toast = Toast.makeText(getActivity(), response, Toast.LENGTH_SHORT);
-                                // toast.show();
                             }
                         },
                         new Response.ErrorListener() {

@@ -47,7 +47,7 @@
                         android:layout_height="wrap_content"
                         android:textSize="18sp"
                         android:textStyle="bold"
-                        android:textColor="#64b5f6"
+                        android:textColor="#e57373"
                         android:layout_alignParentLeft="true" />
 
                 <LinearLayout

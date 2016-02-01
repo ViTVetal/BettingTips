@@ -12,6 +12,7 @@ import android.os.Bundle;
 import android.preference.PreferenceManager;
 import android.support.v4.app.NotificationCompat;
 import android.support.v4.content.ContextCompat;
+import android.text.TextUtils;
 import android.util.Log;
 
 import com.digibase.bettingtips.ui.activities.MainActivity;
@@ -37,7 +38,10 @@ public class MyGcmListenerService extends GcmListenerService {
         Log.d(TAG, "From: " + from);
         Log.d(TAG, "Message: " + message);
         int id = data.getInt("id");
-        int categoryId = data.getInt("category");
+
+        int categoryId = 1;
+        if(data.getString("category") != null && !TextUtils.isEmpty(data.getString("category")));
+            categoryId = Integer.valueOf(data.getString("category"));
 
         if (from.startsWith("/topics/")) {
             // message received from some topic.
@@ -57,7 +61,7 @@ public class MyGcmListenerService extends GcmListenerService {
          * In some cases it may be useful to show a notification indicating to the user
          * that a message was received.
          */
-        if(sharedPreferences.getBoolean(QuickstartPreferences.NOTIFICATION, true))
+        if(sharedPreferences.getBoolean(AppPreferences.NOTIFICATION, true))
             sendNotification(message, id, categoryId);
         // [END_EXCLUDE]
     }
@@ -84,7 +88,7 @@ public class MyGcmListenerService extends GcmListenerService {
                 .setAutoCancel(true)
                 .setContentIntent(pendingIntent);
 
-        if(sharedPreferences.getBoolean(QuickstartPreferences.NOTIFICATION_SOUND, true))
+        if(sharedPreferences.getBoolean(AppPreferences.NOTIFICATION_SOUND, true))
             notificationBuilder.setSound(defaultSoundUri);
 
         NotificationManager notificationManager =

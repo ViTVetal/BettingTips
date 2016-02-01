@@ -3,14 +3,13 @@ package com.digibase.bettingtips.ui.activities;
 import android.content.SharedPreferences;
 import android.os.Bundle;
 import android.preference.PreferenceManager;
-import android.support.v4.widget.SwipeRefreshLayout;
 import android.support.v7.app.ActionBar;
 import android.support.v7.widget.Toolbar;
 import android.view.MenuItem;
 import android.widget.CheckBox;
 import android.widget.CompoundButton;
 
-import com.digibase.bettingtips.QuickstartPreferences;
+import com.digibase.bettingtips.AppPreferences;
 
 import butterknife.ButterKnife;
 import butterknife.InjectView;
@@ -38,8 +37,8 @@ public class SettingActivity extends BaseActivity {
         bar.setDisplayHomeAsUpEnabled(true);
 
         final SharedPreferences sharedPreferences = PreferenceManager.getDefaultSharedPreferences(this);
-        boolean notific = sharedPreferences.getBoolean(QuickstartPreferences.NOTIFICATION, true);
-        boolean notificSound = sharedPreferences.getBoolean(QuickstartPreferences.NOTIFICATION_SOUND, true);
+        boolean notific = sharedPreferences.getBoolean(AppPreferences.NOTIFICATION, true);
+        boolean notificSound = sharedPreferences.getBoolean(AppPreferences.NOTIFICATION_SOUND, true);
 
         cbNotific.setChecked(notific);
         if(!notific) {
@@ -56,14 +55,14 @@ public class SettingActivity extends BaseActivity {
                     cbNotificSound.setChecked(true);
                     cbNotificSound.setEnabled(true);
 
-                    sharedPreferences.edit().putBoolean(QuickstartPreferences.NOTIFICATION, true).apply();
-                    sharedPreferences.edit().putBoolean(QuickstartPreferences.NOTIFICATION_SOUND, true).apply();
+                    sharedPreferences.edit().putBoolean(AppPreferences.NOTIFICATION, true).apply();
+                    sharedPreferences.edit().putBoolean(AppPreferences.NOTIFICATION_SOUND, true).apply();
                 } else {
                     cbNotificSound.setChecked(false);
                     cbNotificSound.setEnabled(false);
 
-                    sharedPreferences.edit().putBoolean(QuickstartPreferences.NOTIFICATION, false).apply();
-                    sharedPreferences.edit().putBoolean(QuickstartPreferences.NOTIFICATION_SOUND, false).apply();
+                    sharedPreferences.edit().putBoolean(AppPreferences.NOTIFICATION, false).apply();
+                    sharedPreferences.edit().putBoolean(AppPreferences.NOTIFICATION_SOUND, false).apply();
                 }
             }
         });
@@ -73,10 +72,10 @@ public class SettingActivity extends BaseActivity {
             public void onCheckedChanged(CompoundButton compoundButton, boolean b) {
                 if(b) {
                     cbNotificSound.setChecked(true);
-                    sharedPreferences.edit().putBoolean(QuickstartPreferences.NOTIFICATION_SOUND, true).apply();
+                    sharedPreferences.edit().putBoolean(AppPreferences.NOTIFICATION_SOUND, true).apply();
                 } else {
                     cbNotificSound.setChecked(false);
-                    sharedPreferences.edit().putBoolean(QuickstartPreferences.NOTIFICATION_SOUND, false).apply();
+                    sharedPreferences.edit().putBoolean(AppPreferences.NOTIFICATION_SOUND, false).apply();
                 }
             }
         });

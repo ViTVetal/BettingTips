@@ -11,7 +11,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20160128111656) do
+ActiveRecord::Schema.define(version: 20160201115252) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
@@ -67,13 +67,21 @@ ActiveRecord::Schema.define(version: 20160128111656) do
     t.integer  "score1"
     t.integer  "score2"
     t.boolean  "success"
-    t.string   "image_url"
+    t.integer  "league_id"
   end
 
   add_index "events", ["category_id"], name: "index_events_on_category_id", using: :btree
+  add_index "events", ["league_id"], name: "index_events_on_league_id", using: :btree
 
   create_table "gcms", force: :cascade do |t|
     t.string   "token"
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
+  end
+
+  create_table "leagues", force: :cascade do |t|
+    t.string   "name"
+    t.string   "image_url"
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
   end
