@@ -6,6 +6,7 @@ class Event < ActiveRecord::Base
 	validates :odds, numericality: true
 	validates :score1, :score2, numericality: { only_integer: true, allow_blank: true }
 
+
     after_create :send_gcm
 
     def send_gcm  
