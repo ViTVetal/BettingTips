@@ -104,7 +104,10 @@ public class FragmentFootball extends Fragment {
                                         String odds = eventJson.getString("odds");
                                         String score1 = eventJson.getString("score1");
                                         String score2 = eventJson.getString("score2");
-                                        boolean success = eventJson.getBoolean("success");
+                                        boolean success = false;
+                                        if(!eventJson.isNull("success")) {
+                                            success = eventJson.getBoolean("success");
+                                        }
                                         String imageURL = "";
                                         if(!eventJson.isNull("league")) {
                                             JSONObject leagueJson = eventJson.getJSONObject("league");

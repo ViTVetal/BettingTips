@@ -5,8 +5,9 @@ class Event < ActiveRecord::Base
 	validates :team1, :team2, :tip, :date, :category, :league, :odds, presence: true
 	validates :odds, numericality: true
 	validates :score1, :score2, numericality: { only_integer: true, allow_blank: true }
-
-
+  validates_inclusion_of :success, in: [true, false], :if => :score1?
+  validates_inclusion_of :success, in: [true, false], :if => :score2?
+  
     after_create :send_gcm
 
     def send_gcm  
